@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+const buttonContainerHeight = 80.0;
+const buttonContainerColour = Color(0xFFEB1555);
+const activeCardColour = Color(0xFF1D1E33);
+
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
 
@@ -22,12 +26,12 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ResusableCard(
-                    colour: const Color(0xFF1D1E33),
+                    colour: activeCardColour,
                   ),
                 ),
                 Expanded(
                   child: ResusableCard(
-                    colour: const Color(0xFF1D1E33),
+                    colour: activeCardColour,
                   ),
                 ),
               ],
@@ -35,7 +39,7 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ResusableCard(
-              colour: const Color(0xFF1D1E33),
+              colour: activeCardColour,
             ),
           ),
           Expanded(
@@ -43,17 +47,23 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ResusableCard(
-                    colour: const Color(0xFF1D1E33),
+                    colour: activeCardColour,
                   ),
                 ),
                 Expanded(
                   child: ResusableCard(
-                    colour: const Color(0xFF1D1E33),
+                    colour: activeCardColour,
                   ),
                 ),
               ],
             ),
           ),
+          Container(
+            color: buttonContainerColour,
+            margin: const EdgeInsets.only(top: 10.0),
+            width: double.infinity,
+            height: buttonContainerHeight,
+          )
         ],
       ),
       floatingActionButton: Theme(

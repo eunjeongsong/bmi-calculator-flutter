@@ -1,5 +1,9 @@
+import 'package:bmi_calculator/reusable_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'icon_content.dart';
 
 const buttonContainerHeight = 80.0;
 const buttonContainerColour = Color(0xFFEB1555);
@@ -23,28 +27,36 @@ class _InputPageState extends State<InputPage> {
         children: <Widget>[
           Expanded(
             child: Row(
-              children: <Widget>[
+              children: const <Widget>[
                 Expanded(
                   child: ResusableCard(
                     colour: activeCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: "MAIL",
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ResusableCard(
                     colour: activeCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: "MAIL",
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
             child: ResusableCard(
               colour: activeCardColour,
             ),
           ),
           Expanded(
             child: Row(
-              children: <Widget>[
+              children: const <Widget>[
                 Expanded(
                   child: ResusableCard(
                     colour: activeCardColour,
@@ -76,23 +88,6 @@ class _InputPageState extends State<InputPage> {
           onPressed: () {},
           child: const Icon(Icons.add),
         ),
-      ),
-    );
-  }
-}
-
-class ResusableCard extends StatelessWidget {
-  ResusableCard({Key? key, required this.colour}) : super(key: key);
-
-  final Color colour;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: colour,
-        borderRadius: BorderRadius.circular(10.0),
       ),
     );
   }

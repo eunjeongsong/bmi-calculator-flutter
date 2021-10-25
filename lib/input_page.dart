@@ -3,12 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'constants.dart';
 import 'icon_content.dart';
 
-const buttonContainerHeight = 80.0;
-const buttonContainerColour = Color(0xFFEB1555);
-const activeCardColour = Color(0xFF1D1E33);
-const inactiveCardColour = Color(0xFF111328);
+enum Gender { male, female }
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -17,28 +15,9 @@ class InputPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 
-enum Gender { male, female }
-
 class _InputPageState extends State<InputPage> {
-  Color maleCardColour = inactiveCardColour;
-  Color femaleCardColour = inactiveCardColour;
-
-  // 1 = male, 2 = female
-  void updateColour(Gender selectedGender) {
-    if (selectedGender == Gender.male) {
-      if (maleCardColour == inactiveCardColour) {
-        maleCardColour = activeCardColour;
-      } else {
-        maleCardColour = inactiveCardColour;
-      }
-    } else if (selectedGender == Gender.female) {
-      if (femaleCardColour == inactiveCardColour) {
-        femaleCardColour = activeCardColour;
-      } else {
-        femaleCardColour = inactiveCardColour;
-      }
-    }
-  }
+  Gender selectedGender = Gender.male;
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -47,71 +26,109 @@ class _InputPageState extends State<InputPage> {
         title: const Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ResusableCard(
+                    onPress: () {
                       setState(() {
-                        updateColour(Gender.male);
+                        selectedGender = Gender.male;
                       });
                     },
-                    child: ResusableCard(
-                      colour: maleCardColour,
-                      cardChild: const IconContent(
-                        icon: FontAwesomeIcons.mars,
-                        label: "MALI",
-                      ),
+                    colour: selectedGender == Gender.male
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
+                    cardChild: const IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: "MAIL",
                     ),
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ResusableCard(
+                    onPress: () {
                       setState(() {
-                        updateColour(Gender.female);
+                        selectedGender = Gender.female;
                       });
                     },
-                    child: ResusableCard(
-                      colour: femaleCardColour,
-                      cardChild: const IconContent(
-                        icon: FontAwesomeIcons.venus,
-                        label: "MAIL",
-                      ),
+                    colour: selectedGender == Gender.female
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
+                    cardChild: const IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: "FEMALE",
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          const Expanded(
+          Expanded(
             child: ResusableCard(
-              colour: activeCardColour,
-            ),
+                colour: kActiveCardColour,
+                cardChild: Column(
+                  // (수직 가운데 정렬)
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "HEIGHT",
+                      style: kLabelTextStyle,
+                    ),
+                    Row(
+                      // (수평 가운데 정렬)
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          height.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        const Text(
+                          "cm",
+                          style: kLabelTextStyle,
+                        )
+                      ],
+                    ),
+                    Slider(
+                      value: height.toDouble(),
+                      min: 120.0,
+                      max: 220.0,
+                      activeColor: kButtonContainerColour,
+                      inactiveColor: Color(0xFF8D8E98),
+                      onChanged: (double value) {
+                        setState(() {
+                          height = value.round();
+                        });
+                      },
+                    )
+                  ],
+                )),
           ),
           Expanded(
             child: Row(
               children: const <Widget>[
                 Expanded(
                   child: ResusableCard(
-                    colour: activeCardColour,
+                    colour: kActiveCardColour,
                   ),
                 ),
                 Expanded(
                   child: ResusableCard(
-                    colour: activeCardColour,
+                    colour: kActiveCardColour,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            color: buttonContainerColour,
+            color: kButtonContainerColour,
             margin: const EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: buttonContainerHeight,
+            height: kButtonContainerHeight,
           )
         ],
       ),

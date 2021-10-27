@@ -1,10 +1,20 @@
+import 'package:bmi_calculator/calculator_brain.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:bmi_calculator/constants.dart';
 import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:flutter/material.dart';
 
 class ResultsPage extends StatelessWidget {
-  const ResultsPage({Key? key}) : super(key: key);
+  final String bmiResult;
+  final String bmiResultText;
+  final String interpretation;
+
+  const ResultsPage(
+      {Key? key,
+      required this.bmiResult,
+      required this.bmiResultText,
+      required this.interpretation})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +43,19 @@ class ResultsPage extends StatelessWidget {
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: const [
+                children: [
                   Text(
-                    "Normal",
+                    bmiResultText,
                     textAlign: TextAlign.center,
                     style: kResultTextStyle,
                   ),
                   Text(
-                    "18.3",
+                    bmiResult,
                     textAlign: TextAlign.center,
                     style: kBMITextStyle,
                   ),
                   Text(
-                    "Your BMI result is quite low, you should eat more!",
+                    interpretation,
                     textAlign: TextAlign.center,
                     style: kBodyTextStyle,
                   )
@@ -54,10 +64,11 @@ class ResultsPage extends StatelessWidget {
             ),
           ),
           BottomButton(
-              onTab: () {
-                Navigator.pop(context);
-              },
-              buttonTitle: "RE-CALCULATE")
+            onTab: () {
+              Navigator.pop(context);
+            },
+            buttonTitle: "RE-CALCULATE",
+          )
         ],
       ),
     );
